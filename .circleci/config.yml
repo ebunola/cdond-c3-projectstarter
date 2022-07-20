@@ -232,4 +232,6 @@ workflows:
           requires: [scan-frontend,scan-backend,test-frontend,test-backend]   
           filters:
             branches:
-              only: [master]          
+              only: [master]  
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]                      
