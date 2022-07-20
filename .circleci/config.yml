@@ -111,5 +111,5 @@ workflows:
       - scan-frontend:
           requires: [build-frontend]   
       - scan-backend:
-          context: cicd project
+          # context: cicd project
           requires: [build-backend]          
