@@ -138,9 +138,8 @@ jobs:
             cd backend
             npm install
             # npm install oauth-sign@^0.9.0
-            npm audit fix --audit-level=critical --force
+            npm audit fix --audit-level=critic al --force
       - slack/notify:
-          channel: general
           event: fail
           template: basic_fail_1
       - slack/notify:
@@ -210,7 +209,9 @@ jobs:
             ansible-playbook -i inventory.txt configure-server.yml   
       - destroy-environment:  
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
 
 
 workflows:
