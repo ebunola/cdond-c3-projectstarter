@@ -184,29 +184,29 @@ jobs:
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}              
 
-  # configure-infrastructure:
-  #   docker:
-  #     - image: python:3.7-alpine3.11
-  #   steps:  
-  #     - checkout
-  #     - add_ssh_keys:
-  #               # You can get this ID in the section where you registered the SSH 
-  #         fingerprints: ["74:c9:22:97:79:b1:38:90:d5:a4:80:af:4a:ba:0d:2f"] 
+  configure-infrastructure:
+    docker:
+      - image: python:3.7-alpine3.11
+    steps:  
+      - checkout
+      - add_ssh_keys:
+                # You can get this ID in the section where you registered the SSH 
+          fingerprints: ["74:c9:22:97:79:b1:38:90:d5:a4:80:af:4a:ba:0d:2f"] 
 
-  #     - run:
-  #         name: install dependencies
-  #         command: |
-  #           apk add --update tar gzip ansible 
-  #           pip install awscli 
-  #     - attach_workspace:
-  #         at: ~/            
-  #     - run:
-  #         name: Run Playbook and Configure server
-  #         command: |
-  #           cd .circleci/ansible
-  #           ansible-playbook -i inventory.txt configure-server.yml   
-  #     - destroy-environment:  
-  #         workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+      - run:
+          name: install dependencies
+          command: |
+            apk add --update tar gzip ansible 
+            pip install awscli 
+      - attach_workspace:
+          at: ~/            
+      - run:
+          name: Run Playbook and Configure server
+          command: |
+            cd .circleci/ansible
+            ansible-playbook -i inventory.txt configure-server.yml   
+      - destroy-environment:  
+          workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
 
   # run-migrations:
   #   docker:
