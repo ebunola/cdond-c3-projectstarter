@@ -186,7 +186,7 @@ jobs:
 
   configure-infrastructure:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: python:3.7-alpine3.16
     steps:  
       - checkout
       - add_ssh_keys:
@@ -197,7 +197,7 @@ jobs:
           name: install dependencies
           command: |
             apk add --update tar gzip ansible 
-            pip install awscli 
+            pip install aws-cli 
       - attach_workspace:
           at: ~/            
       - run:
@@ -237,6 +237,43 @@ jobs:
             fi  
       - destroy-environment:  
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}    
+
+  # deploy-frontend:
+  #   docker:
+  #    - image: python:3.7-alpine3.11
+  #   steps:
+  #     - checkout
+  #     - attach_workspace:
+  #         at: ~/
+  #     - run:
+  #         name: Install dependencies
+  #         command: |
+  #           apk add --update  tar gzip nodejs npm ansible curl
+  #     - run:
+  #         name: Install aws cli
+  #         command: |
+  #           pip install awscli
+  #     - run:
+  #         name: Get backend url
+  #         command: |
+  #           export BACKEND_IP=$(aws ec2 describe-instances \
+  #             --query 'Reservations[*].Instances[*].PublicIpAddress' \
+  #             --filters "Name=tag:aws:cloudformation:stack-name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+  #             --output text)
+  #           echo "API_URL = ${API_URL}"
+  #           echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
+  #           cat frontend/.env
+  #     - run:
+  #         name: Deploy frontend objects
+  #         command: |
+  #           cd frontend
+  #           npm install
+  #           npm run build
+  #           tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
+  #           aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+  #     # Here's where you will add some code to rollback on failure      
+  #     - destroy-environment: 
+  #         workflow_id: ${CIRCLE_WORKFLOW_ID:0:7} 
 
 workflows:
   default:
