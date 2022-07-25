@@ -196,8 +196,8 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            apk add --update tar gzip ansible 
-            pip install aws-cli 
+            apk add --update tar gzip npm ansible 
+            pip install awscli 
       - attach_workspace:
           at: ~/            
       - run:
