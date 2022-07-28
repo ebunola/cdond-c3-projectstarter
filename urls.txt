@@ -1,1 +1,4 @@
 [URL01] https://github.com/ebunola/udapeople-ci-cd
+[URL02] http://udapeople-31e9971.s3-website-us-east-1.amazonaws.com
+[URL CLOUDFRONT] d23y8lclyor7bw.cloudfront.net
+
